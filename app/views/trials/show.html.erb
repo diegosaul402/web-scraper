@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @trial.title %>
+</p>
+
+<p>
+  <strong>Actor:</strong>
+  <%= @trial.actor %>
+</p>
+
+<p>
+  <strong>Defendant:</strong>
+  <%= @trial.defendant %>
+</p>
+
+<p>
+  <strong>Expedient:</strong>
+  <%= @trial.expedient %>
+</p>
+
+<p>
+  <strong>Notification:</strong>
+  <%= @trial.notification_id %>
+</p>
+
+<p>
+  <strong>Summary:</strong>
+  <%= @trial.summary %>
+</p>
+
+<p>
+  <strong>Court:</strong>
+  <%= @trial.court %>
+</p>
+
+<%= link_to 'Edit', edit_trial_path(@trial) %> |
+<%= link_to 'Back', trials_path %>

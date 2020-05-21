@@ -1,0 +1,52 @@
+<%= form_with(model: trial, local: true) do |form| %>
+  <% if trial.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(trial.errors.count, "error") %> prohibited this trial from being saved:</h2>
+
+      <ul>
+        <% trial.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :actor %>
+    <%= form.text_field :actor %>
+  </div>
+
+  <div class="field">
+    <%= form.label :defendant %>
+    <%= form.text_field :defendant %>
+  </div>
+
+  <div class="field">
+    <%= form.label :expedient %>
+    <%= form.text_field :expedient %>
+  </div>
+
+  <div class="field">
+    <%= form.label :notification_id %>
+    <%= form.text_field :notification_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :summary %>
+    <%= form.text_field :summary %>
+  </div>
+
+  <div class="field">
+    <%= form.label :court %>
+    <%= form.text_field :court %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
