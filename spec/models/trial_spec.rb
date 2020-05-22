@@ -28,5 +28,30 @@ RSpec.describe Trial, type: :model do
         expect(Trial.last.expedient). to eq('1794/2013')
       end
     end
+
+    context 'when a new trial is saved with missing data' do
+      before(:all) do
+        result =
+          { title: 'Banco Santander México S.a. | Mexico Exp: 1794/2013',
+            court: 'Morelia > Juzgado Segundo Civil',
+            actor: '',
+            defendant: '',
+            expedient: '',
+            summary: 'fue promovido por BANCO SANTANDER MÉXICO S.A. en contra de BANCO SANTANDER MEXICO en el Juzgado Segundo Civil en Morelia, Michoacán. El Proceso inició el 09 de Enero del 2014 y cuenta con' }
+        @new_trial = Trial.create(result)
+      end
+
+      it 'saves with missing actor' do
+        expect(Trial.find(@new_trial.id).actor). to eq('')
+      end
+
+      it 'saves with missing defendant' do
+        expect(Trial.find(@new_trial.id).defendant). to eq('')
+      end
+
+      it 'saves with missing expedient' do
+        expect(Trial.find(@new_trial.id).expedient). to eq('')
+      end
+    end
   end
 end
