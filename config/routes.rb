@@ -1,5 +1,10 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  resources :trials
+  resources :trials do
+    match '/scrape', to: 'trials#scrape', via: :post, on: :collection
+  end
   resources :notifications
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  root to: 'trials#index'
 end

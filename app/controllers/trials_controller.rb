@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TrialsController < ApplicationController
-  before_action :set_trial, only: [:show, :edit, :update, :destroy]
+  before_action :set_trial, only: %i[show edit update destroy]
 
   # GET /trials
   # GET /trials.json
@@ -11,8 +11,7 @@ class TrialsController < ApplicationController
 
   # GET /trials/1
   # GET /trials/1.json
-  def show
-  end
+  def show; end
 
   # GET /trials/new
   def new
@@ -20,8 +19,7 @@ class TrialsController < ApplicationController
   end
 
   # GET /trials/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /trials
   # POST /trials.json
@@ -63,14 +61,29 @@ class TrialsController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_trial
-      @trial = Trial.find(params[:id])
+  def scrape
+    response = TrialsSpider.process(params[:url])
+    if response && response[:status] == :completed && response[:error].nil?
+      flash.now[:notice] = 'New Trial Added!!'
+    else
+      flash.now[:alert] = response[:error]
     end
 
-    # Only allow a list of trusted parameters through.
-    def trial_params
-      params.require(:trial).permit(:title, :actor, :defendant, :expedient, :notification_id, :summary, :court)
-    end
+    redirect_to trials_path
+  rescue StandardError => e
+    flash.now[:alert] = "Error: #{e}"
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_trial
+    @trial = Trial.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def trial_params
+    params.require(:trial).permit(:title, :actor, :defendant, :expedient,
+                                  :notification_id, :summary, :court)
+  end
 end
